@@ -1,0 +1,140 @@
+<%!
+    public static class Incident {
+        public static final String FORM_NAME_CREATE = "HPD:IncidentInterface_Create";
+		public static final String FORM_NAME_LOOKUP = "HPD:Help Desk";
+        public static final String FIELD_STATUS = "7";
+		public static final String FIELD_STATUS_REASON = "1000000150";
+        public static final String FIELD_RESOLUTION = "1000000156";
+        public static final String FIELD_RESOLUTION_CATEGORY_TIER_1 = "1000002488";
+		public static final String FIELD_RESOLUTION_CATEGORY_TIER_2 = "1000003889";
+		public static final String FIELD_RESOLUTION_CATEGORY_TIER_3 = "1000003890";
+		public static final String FIELD_REPORTED_SOURCE = "1000000215";
+		public static final String FIELD_SERVICE_TYPE = "1000000099";
+		public static final String FIELD_IMPACT = "1000000163";
+		public static final String FIELD_URGENCY = "1000000162";
+		public static final String FIELD_DESCRIPTION = "1000000000";  //Summary
+		public static final String FIELD_DETAILED_DECRIPTION = "1000000151";   //Detailed Description
+		public static final String FIELD_ASSIGNED_SUPPORT_COMPANY = "1000000251";
+		public static final String FIELD_ASSIGNED_SUPPORT_ORGANIZATION = "1000000014";
+		public static final String FIELD_ASSIGNED_GROUP = "1000000217";
+		public static final String FIELD_ASSIGNEE = "1000000218";
+		public static final String FIELD_FIRST_NAME = "1000000019";
+		public static final String FIELD_LAST_NAME = "1000000018";
+		public static final String FIELD_LOGIN_ID = "301921200";
+		public static final String FIELD_SUBMITTER = "2";
+		public static final String FIELD_DIRECT_CONTACT_FIRST_NAME = "1000005783";
+		public static final String FIELD_DIRECT_CONTACT_LAST_NAME = "1000005782";
+		public static final String FIELD_DIRECT_CONTACT_INTERNET_EMAIL = "1000003302";
+		public static final String FIELD_CATEGORIZATION_TIER_1 = "1000000063";
+		public static final String FIELD_CATEGORIZATION_TIER_2 = "1000000064";
+		public static final String FIELD_CATEGORIZATION_TIER_3 = "1000000065";
+		public static final String FIELD_PRODUCT_CATEGORIZATION_TIER_1 = "200000003";
+		public static final String FIELD_PRODUCT_CATEGORIZATION_TIER_2 = "200000004";
+		public static final String FIELD_PRODUCT_CATEGORIZATION_TIER_3 = "200000005";
+		public static final String FIELD_PRODUCT_NAME = "240001002";
+		public static final String FIELD_MANUFACTURER = "240001003";
+		public static final String FIELD_INCIDENT_NUMBER = "1000000161";
+		//Fields from HPD:Helpdesk, which aren't immediately available
+		public static final String FIELD_SRID = "301572100";
+		public static final String FIELD_SRINSTANCEID = "301368700";
+		public static final String FIELD_SRMSAOIGUID = "301572000";
+		
+		public static final String[] FIELD_IDS_LOOKUP = new String[] {
+        	FIELD_INCIDENT_NUMBER, FIELD_SRID, FIELD_SRINSTANCEID, FIELD_SRMSAOIGUID
+        };
+		
+        public static final String[] FIELD_IDS_CREATE = new String[] {
+        	FIELD_INCIDENT_NUMBER
+        };
+		
+        public static Incident find(HelperContext context, String qualification) {
+			// Build the helper
+            ArsHelper helper = null;
+            try {
+                helper = new ArsHelper(context, FORM_NAME_CREATE);
+				helper.setLocalCache(new com.kd.arsHelpers.caching.FormCache(context));
+				
+            } catch (Exception e) {
+                throw new RuntimeException("Unable to initialize an ArsHelper instance.", e);
+            }
+
+			SimpleEntry incidentEntry = null;
+			
+	        try {
+				// Make the call to retrieve incident records from remedy.
+				List<SimpleEntry> entries = helper.doGetSimpleEntryList(qualification);
+				
+				// Check to see that at most one record was returned, if not raise an error.
+				// Otherwise we set the incident entry to the resulting single entry if one
+				// was returned.
+				if (entries.size() > 1) {
+					throw new RuntimeException("Multiple results matched the find single query: "+qualification);
+				} else if (entries.size() == 1) {
+					incidentEntry = entries.get(0);
+				}
+
+			} catch (Exception e) {
+                throw new RuntimeException("There was a problem saving the record.", e);
+            }
+			
+			// Return a new instance of Incident with the entry retrieved above.
+            return new Incident(incidentEntry);
+        }
+
+		//Normal way, but can't use due to other problems
+		public static Incident findIIC(HelperContext context, String qualification) {
+            SimpleEntry incidentEntry = ArsBase.findSingle(context, FORM_NAME_CREATE, qualification, FIELD_IDS_CREATE);
+			Incident incident = new Incident(incidentEntry);
+            return incident;
+        }
+		
+		public static String createIncident(HelperContext context, String serviceType, String description, String requestedForLogin, String submitterLogin, String assignedCompany, String assignedOrganization, String assignedGroup) {
+            SimpleEntry entrySave = new SimpleEntry();
+            entrySave.setSchemaName(FORM_NAME_CREATE);
+            entrySave.setEntryItems(new Hashtable());
+            entrySave.setEntryFieldValue("1000000076", "CREATE");		//z1d_Action field
+			entrySave.setEntryFieldValue("301674600", "Yes");		//Flag_Create_Request
+            entrySave.setEntryFieldValue(FIELD_STATUS, "New");
+			entrySave.setEntryFieldValue(FIELD_SERVICE_TYPE, serviceType);
+            entrySave.setEntryFieldValue(FIELD_IMPACT, "4-Minor/Localized");
+			entrySave.setEntryFieldValue(FIELD_URGENCY, "4-Low");
+			entrySave.setEntryFieldValue(FIELD_DESCRIPTION, description);
+			entrySave.setEntryFieldValue(FIELD_REPORTED_SOURCE, "Phone");
+			entrySave.setEntryFieldValue(FIELD_LOGIN_ID, requestedForLogin);
+			entrySave.setEntryFieldValue(FIELD_SUBMITTER, submitterLogin);
+			entrySave.setEntryFieldValue(FIELD_ASSIGNED_SUPPORT_COMPANY, assignedCompany);
+			entrySave.setEntryFieldValue(FIELD_ASSIGNED_SUPPORT_ORGANIZATION, assignedOrganization);
+			entrySave.setEntryFieldValue(FIELD_ASSIGNED_GROUP, assignedGroup);
+            
+            // Build the helper
+            ArsHelper helper = null;
+            try {
+                helper = new ArsHelper(context, FORM_NAME_CREATE);
+				helper.setLocalCache(new com.kd.arsHelpers.caching.FormCache(context));
+				
+            } catch (Exception e) {
+                throw new RuntimeException("Unable to initialize an ArsHelper instance.", e);
+            }
+
+			String createdRecordId = null;
+            
+			try {
+				createdRecordId = helper.doSetSimpleEntry(entrySave, true);
+            } catch (Exception e) {
+                throw new RuntimeException("There was a problem saving the "+FORM_NAME_CREATE+" record.", e);
+            }
+			
+			return createdRecordId;
+            
+        }
+
+        private SimpleEntry entry = null;
+
+        public Incident(SimpleEntry entry) {
+            this.entry = entry;
+        }
+		
+        public String getIncidentNumber() {return entry.getEntryFieldValue(FIELD_INCIDENT_NUMBER);}
+		public String getSRID() {return entry.getEntryFieldValue(FIELD_SRID);}
+    }
+%>

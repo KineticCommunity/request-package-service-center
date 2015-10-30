@@ -1,0 +1,283 @@
+@charset "utf-8";
+div.pastactivity-response-message {
+    padding: 10px;
+}
+
+div.response-message {
+    margin: 0 0 0 50px;
+}
+div.result-wrap {
+    margin: 0 0 0 10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #D0D0D0; 
+    padding: 5px;
+    float: left;
+}
+
+table#user-results {
+    text-align: justify;
+}
+
+table#user-results tr td, 
+table#user-results tr th {
+    padding: 10px;
+}
+
+table#user-results thead tr {
+    background: whitesmoke;
+}
+table#user-results tbody tr.odd {
+    background: #E3F0E3;
+}
+
+table#user-results tbody tr.even {
+    background: #C4E1C4;
+}
+table#user-results tbody tr:hover {
+    cursor: pointer;
+    background: #d4dbd4;
+}
+
+div.user-address-wrap {
+    background-color: rgb(211, 236, 211); 
+    padding: 10px; 
+    border-radius: 5px; 
+    width: 175px;
+    float: left;
+    margin: 0 0 0 5px;
+}
+
+div.templateButton {
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.userDetails .templateButton {
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+span.templateButton {
+    /*margin-top: 10px;*/
+    cursor: pointer;
+}
+
+#template-search-results {
+    width: 592px;
+    margin: 0 0 0 15px;
+}
+
+div.template-search-wrap {
+    float: left;
+}
+
+div.user-account-wrap {
+    background-color: #CCC; 
+    padding: 5px; 
+    border-radius: 5px; 
+    width: 310px; 
+    float: left; 
+    margin: 15px 0 0 10px;
+}
+
+.step{
+    float:left;
+    width:900px;
+    /*height:320px;*/
+}
+
+#steps{
+    width:900;
+    /*height:320px;*/
+    overflow:hidden;
+}
+
+#search, .results {
+    width: 67%;
+    float: left;
+}
+
+.details {
+    width: 33%;
+	float: right;
+}
+
+.template {
+    padding: 10px;
+    background: white;
+    margin-bottom: 20px;
+    -webkit-box-shadow:  0px 1px 1px 1px #999;
+    box-shadow:  0px 1px 1px 1px #999;
+}
+
+#notifyResults{
+    float: right;
+    font-style: italic;
+    font-weight: bold;
+    padding: 0 0 5px 0;
+    margin: -10px 30px 0 10px;
+}
+
+#notifyResults a {
+    text-decoration: none;
+}
+
+
+.accountPanel {
+    padding: 0px;
+    margin: 1px 0 0 0;
+    background: white;
+    -webkit-box-shadow:  0px 1px 1px 1px #999;
+    box-shadow:  0px 1px 1px 1px #999;
+}
+
+.panelContent {
+    padding: 10px;
+}
+
+.panelContent p{
+    padding: 5px 0;
+    margin: 0px;
+}
+.accountPanel h3{
+    padding: 8px;
+    margin: 0px;
+    background: #999;
+    font-size: 1.3em;
+}
+
+#contact,#accountNumber{
+    font-weight: bold;
+    font-size: 110%;
+}
+
+#accountProfile {
+    background: #C4E1C4;
+    text-align: center;
+    margin: 0px;
+    padding: 1em;
+    color: black;
+    font-size: 150%;
+}
+
+.demographic-label {
+	font-weight:bold;
+	width: 100px;
+	display: inline-block;
+}
+.authentication-label {
+	font-weight:bold;
+	width: 100px;
+	display: inline-block;
+}
+.location-label {
+	font-weight:bold;
+	width: 100px;
+	display: inline-block;
+	float:left;
+	clear:left;
+}
+
+.location-data {
+	margin-left: 100px;
+}
+
+.callerdatatext{
+	width: 275px;
+}
+
+.callerdatastatus {
+	float: right;
+	display: block;
+	visibility: hidden;
+	font-style: italic;
+	color: grey;
+}
+
+.callerdataclear {
+	display: block;
+	visibility: hidden;
+	text-decoration: underline;
+}
+
+.callerdataclear:hover{
+	cursor:pointer;
+}
+
+#pastactivity.panelContent {
+	max-height: 200px;
+	overflow:auto;
+}
+
+li.activity {
+	margin-top:2px;
+	margin-bottom:2px;
+	padding-top:3px;
+	padding-bottom:3px;
+}
+
+li.requestStatusInactive {
+	background-color: lightgray;
+	font-weight:normal;
+}
+
+li.requestStatusInactive a{
+	color:gray;
+}
+
+li.requestStatusActive {
+	font-weight:bold;
+}
+
+li.requestStatusActive a{
+	color:black;
+}
+
+dl {
+    margin: 0px;
+}
+
+dt {
+    font-weight: bold;
+}
+.billing dd {
+    width: 30%;
+    float: left;
+    margin: 0 10px 5px 45px;
+}
+
+.nested dt {
+    float: left;
+    width: 40%;
+    color: #6f7273;
+    margin: 0px;
+}
+
+.nested dd{
+    float: right;
+    width: 40%;
+    margin: 0px;
+}
+
+.late, .late dd {
+    color: red;
+}
+
+#billingIcon{
+    border: 2px solid;
+    padding: 1px 7px;
+}
+
+.icon-cogs, .icon-ok, .icon-comments-alt {
+    border: 2px solid;
+    padding: 3px;
+}
+
+.serviceItemDescriptionHeader{
+    font-weight: bold;
+}
+
+
+

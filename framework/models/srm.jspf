@@ -1,0 +1,62 @@
+<%!
+    public static class SRM {
+        public static final String FORM_NAME = "SRM:RequestInterface_Create";
+		public static final String FIELD_APP_REQUEST_ID = "301289100";
+		public static final String FIELD_SRMID = "1000000829";
+		
+		
+		public static final String[] FIELD_IDS = new String[] {
+        	FIELD_APP_REQUEST_ID, FIELD_SRMID
+        };
+		
+		
+		public static SRM find(HelperContext context, String qualification) {
+			// Build the helper
+            ArsHelper helper = null;
+            try {
+                helper = new ArsHelper(context, FORM_NAME);
+				helper.setLocalCache(new com.kd.arsHelpers.caching.FormCache(context));
+				
+            } catch (Exception e) {
+                throw new RuntimeException("Unable to initialize an ArsHelper instance.", e);
+            }
+
+			SimpleEntry incidentEntry = null;
+			
+	        try {
+				// Make the call to retrieve incident records from remedy.
+				List<SimpleEntry> entries = helper.doGetSimpleEntryList(qualification);
+				
+				// Check to see that at most one record was returned, if not raise an error.
+				// Otherwise we set the incident entry to the resulting single entry if one
+				// was returned.
+				if (entries.size() > 1) {
+					throw new RuntimeException("Multiple results matched the find single query: "+qualification);
+				} else if (entries.size() == 1) {
+					incidentEntry = entries.get(0);
+				}
+			} catch (Exception e) {
+                throw new RuntimeException("There was a problem saving the record.", e);
+            }
+			
+			// Return a new instance of Incident with the entry retrieved above.
+            return new SRM(incidentEntry);
+        }
+		
+		//Normal way, but can't use due to other problems
+		public static SRM findSRM(HelperContext context, String qualification) {
+            SimpleEntry srmTicketEntry = ArsBase.findSingle(context, FORM_NAME, qualification, FIELD_IDS);
+			SRM srmTicket = new SRM(srmTicketEntry);
+            return srmTicket;
+        }
+
+        private SimpleEntry entry = null;
+
+        public SRM (SimpleEntry entry) {
+            this.entry = entry;
+        }
+		
+		public String getAppRequestID() {return entry.getEntryFieldValue(FIELD_APP_REQUEST_ID);}
+		public String getSRMID() {return entry.getEntryFieldValue(FIELD_SRMID);}
+    }
+%>

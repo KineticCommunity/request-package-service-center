@@ -1,0 +1,22 @@
+{
+    "package": "serviceCenter",
+    "languages": {
+      "en_US" : "English"
+    },
+    "views": {
+        "default": {
+            "content": "interface/views/serviceCenter.jsp",
+            "title": "Service Center"
+        }
+    },
+    "links": {
+        "Service_Center": {
+            "type": "main-menu",
+            "label": "Service Center",
+            "class": "package",
+            "description": "Service Center",
+            "icon": "<i class=\"fa fa-gift\"></i>",
+            "displayName": "Service_Center"
+        }
+    }
+}
