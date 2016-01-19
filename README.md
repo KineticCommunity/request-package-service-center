@@ -1,12 +1,6 @@
 ## Overview
-This bundle is used as a personnel subscription service.
 
-It includes the default:
-
-* Listing of Kapps (kapp.jsp)
-* Form display (form.jsp)
-* Login page (login.jsp)
-* Reset Password (resetPassword.jsp)
+This bundle was built to give clients the ability of subscribing their users to different services.
 
 ## Function
 
