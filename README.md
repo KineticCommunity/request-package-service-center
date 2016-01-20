@@ -1,5 +1,7 @@
 ## Overview
 
+To only be used with Kinetic CE.
+
 This bundle was built to give clients the ability of subscribing their users to different services.
 
 ## Function
